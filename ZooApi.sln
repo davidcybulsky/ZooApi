@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooApi", "ZooApi\ZooApi.csproj", "{37A84C93-9E04-4641-BE63-3FE6171D7F28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooApi", "ZooApi\ZooApi.csproj", "{37A84C93-9E04-4641-BE63-3FE6171D7F28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{35C15D59-88BB-4AD3-AF13-E3303797FD42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{37A84C93-9E04-4641-BE63-3FE6171D7F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37A84C93-9E04-4641-BE63-3FE6171D7F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37A84C93-9E04-4641-BE63-3FE6171D7F28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35C15D59-88BB-4AD3-AF13-E3303797FD42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C15D59-88BB-4AD3-AF13-E3303797FD42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C15D59-88BB-4AD3-AF13-E3303797FD42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C15D59-88BB-4AD3-AF13-E3303797FD42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
