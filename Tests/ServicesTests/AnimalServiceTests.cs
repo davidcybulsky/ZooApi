@@ -21,7 +21,7 @@ public class AnimalServiceTests
     public void Create_ShouldCallRepositoryCreate()
     {
         // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.TIGER };
+        var animal = new Animal { Name = "TestAnimal", Species = Species.TIGER, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
 
         // Act
         _animalService.Create(animal);
@@ -31,20 +31,28 @@ public class AnimalServiceTests
     }
 
     [Fact]
+    public void Create_NullAnimal_ShouldThrowException()
+    {
+        // Act and Assert
+        _animalService.Invoking(service => service.Create(null))
+            .Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
     public void Read_ShouldCallRepositoryRead()
     {
         // Arrange
-        var animalId = Guid.NewGuid();
-        _mockRepository.Read(animalId).Returns(new Animal { Id = animalId, Name = "TestAnimal", Species = Species.LION });
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _mockRepository.Read(animal.Id).Returns(animal);
 
         // Act
-        var retrievedAnimal = _animalService.Read(animalId);
+        var retrievedAnimal = _animalService.Read(animal.Id);
 
         // Assert
         retrievedAnimal.Should().NotBeNull();
-        retrievedAnimal.Id.Should().Be(animalId);
-        retrievedAnimal.Name.Should().Be("TestAnimal");
-        retrievedAnimal.Species.Should().Be(Species.LION);
+        retrievedAnimal.Id.Should().Be(animal.Id);
+        retrievedAnimal.Name.Should().Be(animal.Name);
+        retrievedAnimal.Species.Should().Be(animal.Species);
     }
 
     [Fact]
@@ -52,13 +60,25 @@ public class AnimalServiceTests
     {
         // Arrange
         var animalId = Guid.NewGuid();
-        var updatedAnimal = new Animal { Id = animalId, Name = "UpdatedAnimal", Species = Species.PANDA };
+        var updatedAnimal = new Animal {Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
 
         // Act
         _animalService.Update(animalId, updatedAnimal);
 
         // Assert
         _mockRepository.Received(1).Update(animalId, updatedAnimal);
+    }
+
+    [Fact]
+    public void Update_AnimalWithDifferentId_ShouldThrowException()
+    {
+        // Arrange
+        var animalId = Guid.NewGuid();
+        var updatedAnimal = new Animal {Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+
+        // Act and Assert
+        _animalService.Invoking(service => service.Update(animalId, updatedAnimal))
+            .Should().Throw<InvalidOperationException>();
     }
 
     [Fact]
