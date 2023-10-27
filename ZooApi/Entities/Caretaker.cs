@@ -2,9 +2,9 @@
 {
     public class Caretaker : BaseEntity
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Address Address { get; set; }
-        public List<Animal> Animals { get; set; } = new List<Animal>();
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
+        public required virtual Address Address { get; set; }
+        public virtual List<Animal> Animals { get; set; } = new List<Animal>();
     }
 }
