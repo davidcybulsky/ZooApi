@@ -23,7 +23,7 @@ public class AnimalRepositoryTests
     public void Create_ShouldAddAnimalToDatabase()
     {
         // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.TIGER };
+        var animal = new Animal {Name = "TestAnimal", Species = Species.TIGER, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
 
         // Act
         _animalRepository.Create(animal);
@@ -39,7 +39,7 @@ public class AnimalRepositoryTests
     public void Read_ShouldReturnAnimalFromDatabase()
     {
         // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.LION };
+        var animal = new Animal {Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         _context.Animals.Add(animal);
         _context.SaveChanges();
 
@@ -57,10 +57,10 @@ public class AnimalRepositoryTests
     public void Update_ShouldUpdateAnimalInDatabase()
     {
         // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.PARROT };
+        var animal = new Animal {Name = "TestAnimal", Species = Species.PARROT, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         _context.Animals.Add(animal);
         _context.SaveChanges();
-        var updatedAnimal = new Animal { Name = "UpdatedAnimal", Species = Species.PANDA };
+        var updatedAnimal = new Animal {Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
 
         // Act
         _animalRepository.Update(animal.Id, updatedAnimal);
@@ -76,7 +76,7 @@ public class AnimalRepositoryTests
     public void Delete_ShouldRemoveAnimalFromDatabase()
     {
         // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.DOLPHIN };
+        var animal = new Animal {Name = "TestAnimal", Species = Species.DOLPHIN, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         _context.Animals.Add(animal);
         _context.SaveChanges();
 
