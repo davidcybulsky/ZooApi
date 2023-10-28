@@ -36,6 +36,14 @@ public class AnimalRepositoryTests
     }
 
     [Fact]
+    public void Create_NullAnimal_ShouldThrowException()
+    {
+        // Act and Assert
+        _animalRepository.Invoking(repo => repo.Create(null))
+            .Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
     public void Read_ShouldReturnAnimalFromDatabase()
     {
         // Arrange
@@ -70,6 +78,20 @@ public class AnimalRepositoryTests
         retrievedAnimal.Should().NotBeNull();
         retrievedAnimal.Name.Should().Be(updatedAnimal.Name);
         retrievedAnimal.Species.Should().Be(updatedAnimal.Species);
+    }
+
+    [Fact]
+    public void Update_NullAnimal_ShouldThrowException()
+    {
+        // Arrange
+        var animal = new Animal { Name = "TestAnimal", Species = Species.PARROT, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _context.Animals.Add(animal);
+        _context.SaveChanges();
+        Animal updatedAnimal = null;
+        
+        // Act and Assert
+        _animalRepository.Invoking(repo => repo.Update(animal.Id, updatedAnimal))
+            .Should().Throw<InvalidOperationException>();
     }
 
     [Fact]

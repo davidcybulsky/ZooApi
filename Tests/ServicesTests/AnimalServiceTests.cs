@@ -70,14 +70,14 @@ public class AnimalServiceTests
     }
 
     [Fact]
-    public void Update_AnimalWithDifferentId_ShouldThrowException()
+    public void Update_NullAnimal_ShouldThrowException()
     {
         // Arrange
         var animalId = Guid.NewGuid();
-        var updatedAnimal = new Animal {Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        Animal updatedAnimal = null;
 
         // Act and Assert
-        _animalService.Invoking(service => service.Update(animalId, updatedAnimal))
+        _animalService.Invoking(repo => repo.Update(animalId, updatedAnimal))
             .Should().Throw<InvalidOperationException>();
     }
 
