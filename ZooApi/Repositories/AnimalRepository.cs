@@ -42,15 +42,15 @@ namespace ZooApi.Repositories
             var query = from animal in _db.Animals
                         where animal.Id == id
                         select animal;
+
             var result = query.FirstOrDefault();
-            if (result != null)
-            {
-                result.Name = entity.Name;
-                result.Species = entity.Species;
-                result.DateOfBirth = entity.DateOfBirth;
-                result.Caretaker = entity.Caretaker;
-                _db.SaveChanges();
-            }
+
+            result.Name = entity.Name;
+            result.Species = entity.Species;
+            result.DateOfBirth = entity.DateOfBirth;
+            result.Caretaker = entity.Caretaker;
+            _db.SaveChanges();
+
         }
     }
 }
