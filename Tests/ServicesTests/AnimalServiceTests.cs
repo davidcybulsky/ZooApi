@@ -59,14 +59,15 @@ public class AnimalServiceTests
     public void Update_ShouldCallRepositoryUpdate()
     {
         // Arrange
-        var animalId = Guid.NewGuid();
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         var updatedAnimal = new Animal {Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _mockRepository.Read(animal.Id).Returns(animal); // Assuming it returns a boolean indicating success
 
         // Act
-        _animalService.Update(animalId, updatedAnimal);
+        _animalService.Update(animal.Id, updatedAnimal);
 
         // Assert
-        _mockRepository.Received(1).Update(animalId, updatedAnimal);
+        _mockRepository.Received(1).Update(animal.Id, updatedAnimal);
     }
 
     [Fact]
