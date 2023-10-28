@@ -1,4 +1,5 @@
-﻿using Zoo.Entities;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Zoo.Entities;
 using ZooApi.Interface;
 
 namespace Zoo.Services
@@ -14,7 +15,14 @@ namespace Zoo.Services
         }
         public void Create(Caretaker entity)
         {
-            _repository.Create(entity);
+            if (entity != null)
+            {
+                _repository.Create(entity);
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity cannot be null!");
+            }
         }
 
         public void Delete(Guid id)
@@ -30,7 +38,14 @@ namespace Zoo.Services
 
         public void Update(Guid id, Caretaker entity)
         {
-            _repository.Update(id, entity);
+            if (entity != null)
+            {
+                _repository.Update(id, entity);
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity cannot be null!");
+            }
         }
     }
 }
