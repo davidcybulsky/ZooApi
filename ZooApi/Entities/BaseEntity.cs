@@ -1,7 +1,7 @@
 ﻿namespace Zoo.Entities
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
-        public Guid Id { get; set; }
+        public readonly Guid Id = new();
     }
 }
