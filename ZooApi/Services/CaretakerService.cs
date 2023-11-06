@@ -12,8 +12,21 @@ namespace Zoo.Services
         {
             _repository = repository;
         }
+
         public Guid Create(Caretaker entity)
         {
+            if (entity is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var entityInDb = _repository.Read(entity.Id);
+
+            if (entityInDb is not null)
+            {
+                throw new InvalidOperationException();
+            }
+
             var id = _repository.Create(entity);
             return id;
         }
@@ -31,6 +44,11 @@ namespace Zoo.Services
 
         public void Update(Guid id, Caretaker entity)
         {
+            if (entity is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             _repository.Update(id, entity);
         }
     }
