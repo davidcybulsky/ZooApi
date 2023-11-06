@@ -1,12 +1,10 @@
-﻿using Zoo.Entities;
-
-namespace ZooApi.Interface
+﻿namespace ZooApi.Interface
 {
-    public interface IService<T> where T : BaseEntity
+    public interface IService<T> where T : class
     {
-        void Create(T entity);
+        Guid Create(T model);
         T Read(Guid id);
-        void Update(Guid id, T entity);
+        void Update(Guid id, T model);
         void Delete(Guid id);
     }
 }

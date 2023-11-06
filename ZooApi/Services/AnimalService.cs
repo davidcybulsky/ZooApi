@@ -1,24 +1,30 @@
-﻿using Zoo.Entities;
+﻿using AutoMapper;
+using Zoo.Entities;
+using ZooApi.Dtos;
 using ZooApi.Interface;
 
 namespace Zoo.Services
 {
-    public class AnimalService : IService<Animal>
+    public class AnimalService : IService<AnimalDto>
     {
         private readonly IRepository<Animal> _repository;
+        private readonly IMapper _mapper;
 
-        public AnimalService(IRepository<Animal> repository)
+        public AnimalService(IRepository<Animal> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public void Create(Animal entity)
+        public Guid Create(AnimalDto model)
         {
-            if (entity is null)
+            if (model is null)
             {
                 throw new ArgumentNullException();
             }
-            _repository.Create(entity);
+            var entity = _mapper.Map<Animal>(model);
+            var id = _repository.Create(entity);
+            return id;
         }
 
         public void Delete(Guid id)
@@ -26,13 +32,14 @@ namespace Zoo.Services
             _repository.Delete(id);
         }
 
-        public Animal Read(Guid id)
+        public AnimalDto Read(Guid id)
         {
             var entity = _repository.Read(id);
-            return entity;
+            var model = _mapper.Map<AnimalDto>(entity);
+            return model;
         }
 
-        public void Update(Guid id, Animal entity)
+        public void Update(Guid id, AnimalDto model)
         {
             var animalInDb = _repository.Read(id);
 
@@ -40,6 +47,8 @@ namespace Zoo.Services
             {
                 throw new InvalidOperationException();
             }
+
+            var entity = _mapper.Map<Animal>(model);
 
             _repository.Update(id, entity);
         }

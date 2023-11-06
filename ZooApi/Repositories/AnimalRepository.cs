@@ -13,10 +13,11 @@ namespace ZooApi.Repositories
             _db = db;
         }
 
-        public void Create(Animal entity)
+        public Guid Create(Animal entity)
         {
             _db.Animals.Add(entity);
             _db.SaveChanges();
+            return entity.Id;
         }
 
         public void Delete(Guid id)
