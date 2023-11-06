@@ -72,11 +72,13 @@ public class AnimalRepositoryTests
         retrievedAnimal.Species.Should().Be(updatedAnimal.Species);
     }
 
-    [Fact]
-    public void Delete_ShouldRemoveAnimalFromDatabase()
+    [Theory]
+    [ClassData(typeof(CorrectAnimalData))]
+    public void Delete_ShouldRemoveAnimalFromDatabase(string name, Species species, DateTime dateOfBirth, Guid caretakerId)
     {
+
         // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.DOLPHIN, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var animal = new Animal() { Name = name, Species = species, DateOfBirth = dateOfBirth, CaretakerId = caretakerId };
         _context.Animals.Add(animal);
         _context.SaveChanges();
 
