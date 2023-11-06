@@ -12,9 +12,10 @@ namespace Zoo.Services
         {
             _repository = repository;
         }
-        public void Create(Caretaker entity)
+        public Guid Create(Caretaker entity)
         {
-            _repository.Create(entity);
+            var id = _repository.Create(entity);
+            return id;
         }
 
         public void Delete(Guid id)

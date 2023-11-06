@@ -1,12 +1,11 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Zoo.Entities;
-using Zoo.Services;
 using ZooApi.Data;
 using ZooApi.Repositories;
 
 namespace Tests.RepositoriesTests;
-public class AnimalRepositoryTests : IDisposable
+public class AnimalRepositoryTests
 {
     private readonly ZooContext _context;
     private readonly AnimalRepository _animalRepository;
@@ -24,7 +23,7 @@ public class AnimalRepositoryTests : IDisposable
     public void Create_ShouldAddAnimalToDatabase()
     {
         // Arrange
-        var animal = new Animal {Name = "TestAnimal", Species = Species.TIGER, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var animal = new Animal { Name = "TestAnimal", Species = Species.TIGER, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
 
         // Act
         _animalRepository.Create(animal);
@@ -40,7 +39,7 @@ public class AnimalRepositoryTests : IDisposable
     public void Read_ShouldReturnAnimalFromDatabase()
     {
         // Arrange
-        var animal = new Animal {Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         _context.Animals.Add(animal);
         _context.SaveChanges();
 
@@ -69,10 +68,10 @@ public class AnimalRepositoryTests : IDisposable
     public void Update_ShouldUpdateAnimalInDatabase()
     {
         // Arrange
-        var animal = new Animal {Name = "TestAnimal", Species = Species.PARROT, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var animal = new Animal { Name = "TestAnimal", Species = Species.PARROT, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         _context.Animals.Add(animal);
         _context.SaveChanges();
-        var updatedAnimal = new Animal {Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var updatedAnimal = new Animal { Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
 
         // Act
         _animalRepository.Update(animal.Id, updatedAnimal);
@@ -100,7 +99,7 @@ public class AnimalRepositoryTests : IDisposable
     public void Delete_ShouldRemoveAnimalFromDatabase()
     {
         // Arrange
-        var animal = new Animal {Name = "TestAnimal", Species = Species.DOLPHIN, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var animal = new Animal { Name = "TestAnimal", Species = Species.DOLPHIN, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         _context.Animals.Add(animal);
         _context.SaveChanges();
 

@@ -1,6 +1,5 @@
 using FluentAssertions;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
 using Zoo.Entities;
 using Zoo.Services;
@@ -74,7 +73,7 @@ public class AnimalServiceTests
     {
         // Arrange
         var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
-        var updatedAnimal = new Animal {Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var updatedAnimal = new Animal { Name = "UpdatedAnimal", Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
         _mockRepository.Read(animal.Id).Returns(animal); // Assuming it returns a boolean indicating success
 
         // Act
@@ -112,12 +111,29 @@ public class AnimalServiceTests
     public void Delete_ShouldCallRepositoryDelete()
     {
         // Arrange
-        var animalId = Guid.NewGuid();
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _mockRepository.Read(animal.Id).Returns(animal);
 
         // Act
-        _animalService.Delete(animalId);
+        _animalService.Delete(animal.Id);
 
         // Assert
-        _mockRepository.Received(1).Delete(animalId);
+        _mockRepository.Received(1).Delete(animal.Id);
     }
+
+    [Fact]
+    public void Delete_ShouldThrowException_WhenAnimalIsNotInDb()
+    {
+        // Arrange
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _mockRepository.Read(animal.Id).ReturnsNull();
+
+        // Act and Assert
+        _animalService.Invoking(repo => repo.Delete(animal.Id))
+            .Should().Throw<InvalidOperationException>();
+    }
+    /*
+    [InlineData()]
+    public void Create_
+    */
 }

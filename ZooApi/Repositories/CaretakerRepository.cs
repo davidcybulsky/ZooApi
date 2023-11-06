@@ -13,10 +13,11 @@ namespace ZooApi.Repositories
             _db = db;
         }
 
-        public void Create(Caretaker entity)
+        public Guid Create(Caretaker entity)
         {
             _db.Caretakers.Add(entity);
             _db.SaveChanges();
+            return entity.Id;
         }
 
         public void Delete(Guid id)

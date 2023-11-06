@@ -12,23 +12,37 @@ namespace Zoo.Services
             _repository = repository;
         }
 
-        public void Create(Animal entity)
+        public Guid Create(Animal entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException();
             }
-            _repository.Create(entity);
+
+            var id = _repository.Create(entity);
+
+            return id;
         }
 
         public void Delete(Guid id)
         {
+            var animal = _repository.Read(id);
+
+            if (animal is null)
+            {
+                throw new InvalidOperationException();
+            }
+
             _repository.Delete(id);
         }
 
         public Animal Read(Guid id)
         {
             var entity = _repository.Read(id);
+            if (entity is null)
+            {
+                throw new InvalidOperationException();
+            }
             return entity;
         }
 
