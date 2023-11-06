@@ -59,12 +59,9 @@ public class AnimalRepositoryTests : IDisposable
     {
         // Arrange
         var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
-        var animal2 = new Animal { Name = "TestAnimal2", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
-        _context.Animals.Add(animal);
-        _context.SaveChanges();
 
         // Act and Assert
-        _animalRepository.Invoking(repo => repo.Read(animal2.Id))
+        _animalRepository.Invoking(repo => repo.Read(animal.Id))
             .Should().Throw<InvalidOperationException>();
     }
 
