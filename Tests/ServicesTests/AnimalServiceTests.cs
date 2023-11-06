@@ -40,6 +40,18 @@ public class AnimalServiceTests
     }
 
     [Fact]
+    public void Create_ThrowException_WhenAnimalsNameIsNull()
+    {
+        // Arrange
+        var animal = new Animal { Name = null, Species = Species.TIGER, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+
+        // Act and Assert
+        _animalService.Invoking(repo => repo.Create(animal))
+            .Should().Throw<ArgumentNullException>();
+    }
+
+
+    [Fact]
     public void Read_ShouldCallRepositoryRead()
     {
         // Arrange
@@ -106,6 +118,22 @@ public class AnimalServiceTests
         _animalService.Invoking(repo => repo.Update(animalId, updatedAnimal))
             .Should().Throw<InvalidOperationException>();
     }
+
+
+    [Fact]
+    public void Update_SchouldThrowException_WhenAnimalsNameIsNull()
+    {
+        // Arrange
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var updatedAnimal = new Animal { Name = null, Species = Species.PANDA, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _mockRepository.Read(animal.Id).Returns(animal); // Assuming it returns a boolean indicating success
+
+
+        // Act and Assert
+        _animalService.Invoking(repo => repo.Update(animal.Id, updatedAnimal))
+            .Should().Throw<ArgumentNullException>();
+    }
+
 
     [Fact]
     public void Delete_ShouldCallRepositoryDelete()

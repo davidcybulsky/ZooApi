@@ -14,7 +14,7 @@ namespace Zoo.Services
 
         public Guid Create(Animal entity)
         {
-            if (entity is null)
+            if (entity is null || entity.Name is null)
             {
                 throw new ArgumentNullException();
             }
@@ -62,7 +62,7 @@ namespace Zoo.Services
                 throw new InvalidOperationException();
             }
 
-            if (entity is null)
+            if (entity is null || entity.Name is null)
             {
                 throw new ArgumentNullException();
             }
