@@ -132,8 +132,30 @@ public class AnimalServiceTests
         _animalService.Invoking(repo => repo.Delete(animal.Id))
             .Should().Throw<InvalidOperationException>();
     }
-    /*
-    [InlineData()]
-    public void Create_
-    */
+
+    [Fact]
+    public void Create_ShouldThowException_WhenObjectExists()
+    {
+        //Arrange
+        var animal = new Animal { Name = "TestAniaml", Species = Species.TIGER, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+
+        _mockRepository.Read(animal.Id).Returns(animal);
+
+        //Act and Assert
+        _animalService.Invoking(repo => repo.Create(animal))
+            .Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
+    public void Update_ShouldThrowException_WhenNullIsGiven()
+    {
+        //Arrange
+        var animal = new Animal { Name = "TestAniaml", Species = Species.TIGER, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+
+        _mockRepository.Read(animal.Id).Returns(animal);
+
+        //Act and Assert
+        _animalService.Invoking(repo => repo.Update(animal.Id, null))
+            .Should().Throw<ArgumentNullException>();
+    }
 }

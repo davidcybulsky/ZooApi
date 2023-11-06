@@ -54,17 +54,6 @@ public class AnimalRepositoryTests
     }
 
     [Fact]
-    public void Read_ShouldThrowException_WhenAnimalNotInDb()
-    {
-        // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
-
-        // Act and Assert
-        _animalRepository.Invoking(repo => repo.Read(animal.Id))
-            .Should().Throw<InvalidOperationException>();
-    }
-
-    [Fact]
     public void Update_ShouldUpdateAnimalInDatabase()
     {
         // Arrange
@@ -81,18 +70,6 @@ public class AnimalRepositoryTests
         retrievedAnimal.Should().NotBeNull();
         retrievedAnimal.Name.Should().Be(updatedAnimal.Name);
         retrievedAnimal.Species.Should().Be(updatedAnimal.Species);
-    }
-
-    [Fact]
-    public void Update_ShouldThrowException_WhenAnimalNotInDb()
-    {
-        // Arrange
-        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
-        _context.SaveChanges();
-
-        // Act and Assert
-        _animalRepository.Invoking(repo => repo.Update(animal.Id, animal))
-            .Should().Throw<InvalidOperationException>();
     }
 
     [Fact]
