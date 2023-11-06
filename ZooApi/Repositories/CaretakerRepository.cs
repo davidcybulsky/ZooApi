@@ -43,13 +43,12 @@ namespace ZooApi.Repositories
             var query = from caretaker in _db.Caretakers
                         where caretaker.Id == id
                         select caretaker;
+
             var result = query.FirstOrDefault();
-            if (result != null)
-            {
-                result.FirstName = entity.FirstName;
-                result.LastName = entity.LastName;
-                _db.SaveChanges();
-            }
+
+            result = entity;
+
+            _db.SaveChanges();
         }
     }
 }

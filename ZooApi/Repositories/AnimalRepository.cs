@@ -46,10 +46,8 @@ namespace ZooApi.Repositories
 
             var result = query.FirstOrDefault();
 
-            result.Name = entity.Name;
-            result.Species = entity.Species;
-            result.DateOfBirth = entity.DateOfBirth;
-            result.Caretaker = entity.Caretaker;
+            result = entity;
+
             _db.SaveChanges();
 
         }

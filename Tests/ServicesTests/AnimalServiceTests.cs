@@ -63,9 +63,7 @@ public class AnimalServiceTests
 
         // Assert
         retrievedAnimal.Should().NotBeNull();
-        retrievedAnimal.Id.Should().Be(animal.Id);
-        retrievedAnimal.Name.Should().Be(animal.Name);
-        retrievedAnimal.Species.Should().Be(animal.Species);
+        retrievedAnimal.Should().Be(animal);
     }
 
     [Fact]

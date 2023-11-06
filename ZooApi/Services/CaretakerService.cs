@@ -15,7 +15,7 @@ namespace Zoo.Services
 
         public Guid Create(Caretaker entity)
         {
-            if (entity is null)
+            if (entity is null || entity.Address is null || entity.FirstName is null || entity.LastName is null)
             {
                 throw new ArgumentNullException();
             }
@@ -33,12 +33,25 @@ namespace Zoo.Services
 
         public void Delete(Guid id)
         {
+            var entityInDb = _repository.Read(id);
+
+            if (entityInDb is null)
+            {
+                throw new InvalidOperationException();
+            }
+
             _repository.Delete(id);
         }
 
         public Caretaker Read(Guid id)
         {
             var entity = _repository.Read(id);
+
+            if (entity is null)
+            {
+                throw new InvalidOperationException();
+            }
+
             return entity;
         }
 
@@ -47,6 +60,13 @@ namespace Zoo.Services
             if (entity is null)
             {
                 throw new ArgumentNullException();
+            }
+
+            var caretakerInDb = _repository.Read(id);
+
+            if (caretakerInDb is null)
+            {
+                throw new InvalidOperationException();
             }
 
             _repository.Update(id, entity);

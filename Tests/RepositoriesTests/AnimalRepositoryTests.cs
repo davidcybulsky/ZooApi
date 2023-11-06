@@ -31,8 +31,7 @@ public class AnimalRepositoryTests
         // Assert
         var savedAnimal = _context.Animals.FirstOrDefault(a => a.Id == animal.Id);
         savedAnimal.Should().NotBeNull();
-        savedAnimal.Name.Should().Be(animal.Name);
-        savedAnimal.Species.Should().Be(animal.Species);
+        savedAnimal.Should().Be(animal);
     }
 
     [Fact]
@@ -48,9 +47,7 @@ public class AnimalRepositoryTests
 
         // Assert
         retrievedAnimal.Should().NotBeNull();
-        retrievedAnimal.Id.Should().Be(animal.Id);
-        retrievedAnimal.Name.Should().Be(animal.Name);
-        retrievedAnimal.Species.Should().Be(animal.Species);
+        retrievedAnimal.Should().Be(animal);
     }
 
     [Fact]
@@ -67,9 +64,7 @@ public class AnimalRepositoryTests
 
         // Assert
         var retrievedAnimal = _context.Animals.FirstOrDefault(a => a.Id == animal.Id);
-        retrievedAnimal.Should().NotBeNull();
-        retrievedAnimal.Name.Should().Be(updatedAnimal.Name);
-        retrievedAnimal.Species.Should().Be(updatedAnimal.Species);
+        retrievedAnimal.Should().Be(animal);
     }
 
     [Theory]

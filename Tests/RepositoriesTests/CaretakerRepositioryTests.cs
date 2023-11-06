@@ -32,8 +32,7 @@ namespace Tests.RepositoriesTests
             // Assert
             var savedCaretaker = _context.Caretakers.FirstOrDefault(a => a.Id == caretaker.Id);
             savedCaretaker.Should().NotBeNull();
-            savedCaretaker.FirstName.Should().Be(caretaker.FirstName);
-            savedCaretaker.LastName.Should().Be(caretaker.LastName);
+            savedCaretaker.Should().Be(caretaker);
         }
 
         [Fact]
@@ -48,10 +47,7 @@ namespace Tests.RepositoriesTests
             var retrievedCaretaker = _caretakerRepository.Read(caretaker.Id);
 
             // Assert
-            retrievedCaretaker.Should().NotBeNull();
-            retrievedCaretaker.Id.Should().Be(caretaker.Id);
-            retrievedCaretaker.FirstName.Should().Be(caretaker.FirstName);
-            retrievedCaretaker.LastName.Should().Be(caretaker.LastName);
+            retrievedCaretaker.Should().Be(caretaker);
         }
 
         [Fact]
@@ -68,9 +64,7 @@ namespace Tests.RepositoriesTests
 
             // Assert
             var retrievedCaretaker = _context.Caretakers.FirstOrDefault(a => a.Id == caretaker.Id);
-            retrievedCaretaker.Should().NotBeNull();
-            retrievedCaretaker.FirstName.Should().Be(updatedCaretaker.FirstName);
-            retrievedCaretaker.LastName.Should().Be(updatedCaretaker.LastName);
+            retrievedCaretaker.Should().Be(caretaker);
         }
 
         [Fact]
