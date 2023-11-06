@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Zoo.Entities;
+using Zoo.Services;
 using ZooApi.Data;
 using ZooApi.Repositories;
 
@@ -54,6 +55,20 @@ public class AnimalRepositoryTests : IDisposable
     }
 
     [Fact]
+    public void Read_ShouldThrowException_WhenAnimalNotInDb()
+    {
+        // Arrange
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var animal2 = new Animal { Name = "TestAnimal2", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _context.Animals.Add(animal);
+        _context.SaveChanges();
+
+        // Act and Assert
+        _animalRepository.Invoking(repo => repo.Read(animal2.Id))
+            .Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
     public void Update_ShouldUpdateAnimalInDatabase()
     {
         // Arrange
@@ -70,6 +85,20 @@ public class AnimalRepositoryTests : IDisposable
         retrievedAnimal.Should().NotBeNull();
         retrievedAnimal.Name.Should().Be(updatedAnimal.Name);
         retrievedAnimal.Species.Should().Be(updatedAnimal.Species);
+    }
+
+    [Fact]
+    public void Update_ShouldThrowException_WhenAnimalNotInDb()
+    {
+        // Arrange
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        var animal2 = new Animal { Name = "TestAnimal2", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _context.Animals.Add(animal);
+        _context.SaveChanges();
+
+        // Act and Assert
+        _animalRepository.Invoking(repo => repo.Update(animal2.Id, animal2))
+            .Should().Throw<InvalidOperationException>();
     }
 
     [Fact]
