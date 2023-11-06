@@ -5,7 +5,7 @@ using ZooApi.Data;
 using ZooApi.Repositories;
 
 namespace Tests.RepositoriesTests;
-public class AnimalRepositoryTests
+public class AnimalRepositoryTests : IDisposable
 {
     private readonly ZooContext _context;
     private readonly AnimalRepository _animalRepository;

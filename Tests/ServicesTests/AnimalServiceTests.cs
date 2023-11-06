@@ -1,5 +1,7 @@
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using NSubstitute.ReturnsExtensions;
 using Zoo.Entities;
 using Zoo.Services;
 using ZooApi.Interface;
@@ -56,6 +58,18 @@ public class AnimalServiceTests
     }
 
     [Fact]
+    public void Read_ShouldThrowException_WhenAnimalNotInDb()
+    {
+        // Arrange
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _mockRepository.Read(animal.Id).ReturnsNull();
+
+        // Act and Assert
+        _animalService.Invoking(repo => repo.Read(animal.Id))
+            .Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
     public void Update_ShouldCallRepositoryUpdate()
     {
         // Arrange
@@ -68,6 +82,18 @@ public class AnimalServiceTests
 
         // Assert
         _mockRepository.Received(1).Update(animal.Id, updatedAnimal);
+    }
+
+    [Fact]
+    public void Update_ShouldThrowException_WhenAnimalNotInDb()
+    {
+        // Arrange
+        var animal = new Animal { Name = "TestAnimal", Species = Species.LION, DateOfBirth = DateTime.Now, CaretakerId = Guid.NewGuid() };
+        _mockRepository.Read(animal.Id).ReturnsNull();
+
+        // Act and Assert
+        _animalService.Invoking(repo => repo.Update(animal.Id, animal))
+            .Should().Throw<InvalidOperationException>();
     }
 
     [Fact]
